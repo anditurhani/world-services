@@ -29,8 +29,11 @@ public class CityDaoImpl extends NamedParameterJdbcDaoSupport implements ICityDa
 		return cityList;
 	}
 
-	public List<City> searchCitiesByName(String searchStr) {
-		String sql = "SELECT id id, name name, population population, countrycode countrycode FROM city WHERE name LIKE ?";
+	public List<City> searchCities(String searchStr, String countrycode) {
+		String sql = "SELECT id id, name name, population population, countrycode countrycode FROM city WHERE name LIKE :str AND ('' = :citycountrycode OR countrycode = :citycountrycode)";
+		MapSqlParameterSource params = new MapSqlParameterSource();
+		params.addValue("str", searchStr);
+		params.addValue("citycountrycode", countrycode);
 		BeanPropertyRowMapper<City> rm = new BeanPropertyRowMapper<City>(City.class);
 		List<City> cityList = getJdbcTemplate().query(sql, new Object[] { searchStr }, rm);
 		return cityList;

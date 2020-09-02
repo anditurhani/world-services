@@ -8,7 +8,7 @@ public interface ICityDao {
 
 	public List<City> getCityListByCountrycode(String countrycode);
 
-	public List<City> searchCitiesByName(String searchStr);
+	public List<City> searchCities(String searchStr, String countrycode);
 
 	public City getCityById(int id);
 

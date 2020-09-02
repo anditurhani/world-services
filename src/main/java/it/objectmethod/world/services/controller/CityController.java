@@ -27,10 +27,11 @@ public class CityController {
 		return cityList;
 	}
 
-	@GetMapping("/search-cities-by-name")
-	public List<City> searchCitiesByName(@RequestParam(name = "searchStr") String searchStr) {
+	@GetMapping("/search-cities")
+	public List<City> searchCities(@RequestParam(name = "searchStr") String searchStr,
+			@RequestParam(name = "countrycode") String countrycode) {
 		searchStr = "%" + searchStr + "%";
-		List<City> cityList = cityDao.searchCitiesByName(searchStr);
+		List<City> cityList = cityDao.searchCities(searchStr, countrycode);
 		return cityList;
 	}
 
