@@ -65,4 +65,10 @@ public class CityController {
 		}
 		return resp;
 	}
+	
+	@PutMapping("/delete-city")
+	public String deleteCity(@RequestParam(name = "id") int id) {
+		cityDao.deleteCity(id);
+		return "city deleted";
+	}
 }
