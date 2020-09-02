@@ -61,5 +61,10 @@ public class CityDaoImpl extends NamedParameterJdbcDaoSupport implements ICityDa
 		params.addValue("cityid", city.getId());
 		getNamedParameterJdbcTemplate().update(sql, params);
 	}
+	
+	public void deleteCity(int id) {
+		String sql = "DELETE FROM city WHERE id = ?";
+		getJdbcTemplate().update(sql, new Object[] {id});
+	}
 
 }

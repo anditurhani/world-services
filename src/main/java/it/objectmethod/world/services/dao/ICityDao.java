@@ -15,5 +15,7 @@ public interface ICityDao {
 	public void addCity(City city);
 
 	public void updateCity(City city);
+	
+	public void deleteCity(int id);
 
 }
