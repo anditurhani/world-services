@@ -52,19 +52,20 @@ public class CityDaoImpl extends NamedParameterJdbcDaoSupport implements ICityDa
 		getNamedParameterJdbcTemplate().update(sql, params);
 	}
 
-	public void updateCity(City city) {
+	public int updateCity(City city) {
 		String sql = "UPDATE city SET (name = :cityname, population = :citypopulation, countrycode = :citycountrycode) WHERE id = :cityid";
 		MapSqlParameterSource params = new MapSqlParameterSource();
 		params.addValue("cityname", city.getName());
 		params.addValue("citypopulation", city.getPopulation());
 		params.addValue("citycountrycode", city.getCountrycode());
 		params.addValue("cityid", city.getId());
-		getNamedParameterJdbcTemplate().update(sql, params);
+		int num = getNamedParameterJdbcTemplate().update(sql, params);
+		return num;
 	}
-	
-	public void deleteCity(int id) {
+
+	public int deleteCity(int id) {
 		String sql = "DELETE FROM city WHERE id = ?";
-		getJdbcTemplate().update(sql, new Object[] {id});
+		return getJdbcTemplate().update(sql, new Object[] { id });
 	}
 
 }

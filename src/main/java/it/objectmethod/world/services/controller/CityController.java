@@ -47,8 +47,7 @@ public class CityController {
 			resp = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		} else {
 			cityDao.addCity(city);
-			String action = "city added";
-			resp = new ResponseEntity<>(action, HttpStatus.ACCEPTED);
+			resp = new ResponseEntity<>("city added", HttpStatus.ACCEPTED);
 		}
 		return resp;
 	}
@@ -56,19 +55,29 @@ public class CityController {
 	@PutMapping("/update-city")
 	public ResponseEntity<String> updateCity(@RequestBody City city) {
 		ResponseEntity<String> resp = null;
-		if (city.getPopulation() < 0) {
-			resp = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		int num = 0;
+		if (city.getPopulation() > 0) {
+			num = cityDao.updateCity(city);
 		} else {
-			cityDao.updateCity(city);
-			String action = "city updated";
-			resp = new ResponseEntity<>(action, HttpStatus.ACCEPTED);
+			resp = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		if (num > 0) {
+			resp = new ResponseEntity<>("city added", HttpStatus.ACCEPTED);
+		} else {
+			resp = new ResponseEntity<>("city not found", HttpStatus.BAD_REQUEST);
 		}
 		return resp;
 	}
-	
+
 	@PutMapping("/delete-city")
-	public String deleteCity(@RequestParam(name = "id") int id) {
-		cityDao.deleteCity(id);
-		return "city deleted";
+	public ResponseEntity<String> deleteCity(@RequestParam(name = "id") int id) {
+		ResponseEntity<String> resp = null;
+		int num = cityDao.deleteCity(id);
+		if (num > 0) {
+			resp = new ResponseEntity<>("city deleted", HttpStatus.ACCEPTED);
+		} else {
+			resp = new ResponseEntity<>("city not found", HttpStatus.BAD_REQUEST);
+		}
+		return resp;
 	}
 }
